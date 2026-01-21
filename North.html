@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>North Indian Menu - SEASONINGS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: #fff3e0;">
+    <div style="font-size: 28px; font-weight: bold; color: #ff6f3c;">SEASONINGS</div>
+    <nav>
+      <a href="seasonings.html" style="margin-right: 20px; text-decoration: none; color: #333;">Home</a>
+      <a href="about.html" style="margin-right: 20px; text-decoration: none; color: #333;">About Us</a>
+      <a href="contact.html" style="text-decoration: none; color: #333;">Contact</a>
+      <button onclick="toggleCartOverlay()" style="background: none; border: none; cursor: pointer;">
+      <img src="assets/cart-icon.png" alt="Cart" style="width: 24px; height: 24px;">
+     </button>
+    </nav>
+  </header>
+
+  <!-- Title -->
+  <h2 style="text-align: center; margin-top: 20px;">North Indian Menu</h2>
+
+  <!-- Food Grid -->
+  <div class="food-grid" id="menu"></div>
+
+  <!-- Cart -->
+  <div class="cart">
+    <h2>Your Cart</h2>
+    <ul id="cart-list"></ul>
+    <p><strong>Total:</strong> ₹<span id="total">0.00</span></p>
+    <button onclick="submitOrder()">Place Order</button>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Item added to cart!</div>
+
+  <!-- Order Popup -->
+  <div id="order-popup" style="display:none;">
+    <div class="popup-box">
+      <div class="tick">✅</div>
+      <h3>Order Placed!</h3>
+      <p>Thank you for your order. We’re preparing your food!</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="cart.js"></script>
+  <script>
+    const menuData = [
+      { name: 'Butter Chicken', price: 230.00 , image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg1y1sBm0akCMRoa_xB2TCKdNeqtFmAM2EMg&s' },
+      { name: 'Paneer Tikka', price: 210.00, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJ2WY2YmIJtXrpmDToEHwJIOAcyBefjpFwXg&s' },
+      { name: 'Paneer Butter Masala', price: 190.00, image: 'https://vegecravings.com/wp-content/uploads/2017/04/paneer-butter-masala-recipe-step-by-step-instructions.jpg' },
+      { name: 'Chicken Tikka Masala', price: 260.00, image: 'https://c.ndtvimg.com/2022-07/33meqsb_chicken-tikka_625x300_08_July_22.png' },
+      { name: 'Garlic Naan', price: 40.00, image: 'https://gingerwithspice.com/wp-content/uploads/2017/11/Garlic-Cilantro-Naan-straight.jpg' },
+      { name: 'Chana Masala', price: 180.00, image: 'https://sixhungryfeet.com/wp-content/uploads/2023/06/Easy-Chana-Masala-Recipe-8.jpg' },
+      { name: 'Kulcha Chana', price: 160.00, image: 'https://www.nehascookbook.com/wp-content/uploads/2022/09/Pindi-chole-kulcha-WS.jpg' },
+      { name: 'Pav Bhaji', price: 130.00, image: 'https://www.cubesnjuliennes.com/wp-content/uploads/2020/07/Instant-Pot-Mumbai-Pav-Bhaji-Recipe.jpg' },
+      { name: 'Chole Bhature', price: 170.00, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaGrKq09KmIDLk_tx77981qeP_vFuaw2Haw&s' },
+      { name: 'Paneer Kholapuri', price: 220.00, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJR8LAJbiJpquXfMCFcYTEdcFDtfqUJe7JYA&s' },
+      { name: 'Chicken Lollypop', price: 300.00, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2KYDsPWThfvIEFQxTZCmDJZDMWhNaTr4BOA&s' },
+    ];
+
+    const menuContainer = document.getElementById('menu');
+    menuData.forEach(item => {
+      const foodItemDiv = document.createElement('div');
+      foodItemDiv.className = 'food-item';
+
+      const img = document.createElement('img');
+      img.src = item.image;
+      img.alt = item.name;
+      foodItemDiv.appendChild(img);
+
+      const foodName = document.createElement('div');
+      foodName.innerText = item.name;
+      foodItemDiv.appendChild(foodName);
+
+      const foodPrice = document.createElement('div');
+      foodPrice.innerText = '₹' + item.price.toFixed(2);
+      foodItemDiv.appendChild(foodPrice);
+
+      const addButton = document.createElement('button');
+      addButton.innerText = 'Add to Cart';
+      addButton.onclick = function () {
+        addToCart(item);
+        showToast(`${item.name} added to cart!`);
+      };
+      foodItemDiv.appendChild(addButton);
+
+      menuContainer.appendChild(foodItemDiv);
+    });
+  </script>
+  <div id="cart-overlay" style="
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+  z-index: 999;
+  padding: 20px;
+  overflow-y: auto;
+  font-family: 'Segoe UI', sans-serif;
+">
+  <h3 style="margin-top: 0;">Your Cart</h3>
+  <ul id="cart-overlay-list" style="list-style: none; padding: 0;"></ul>
+  
+  <p id="empty-cart-msg" style="margin-top: 40px; color: gray; text-align: center; font-weight: 500;">
+    Your cart is empty!!!<br/>Add something tasty!!!
+  </p>
+
+  <p style="margin-top: 20px;"><strong>Total:</strong> ₹<span id="cart-overlay-total">0.00</span></p>
+
+  <button onclick="submitOrder()" style="
+    margin-top: 10px;
+    background-color: #ff6f3c;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+  ">Place Order</button>
+</div>
+<button onclick="toggleCartOverlay()" style="
+  background: none;
+  border: none;
+  font-size: 20px;
+  float: right;
+  cursor: pointer;
+  margin-top: -10px;
+  color: #888;
+">✖</button>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Drinks Menu - SEASONINGS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: #fff3e0;">
+    <div style="font-size: 28px; font-weight: bold; color: #ff6f3c;">SEASONINGS</div>
+    <nav>
+      <a href="seasonings.html" style="margin-right: 20px; text-decoration: none; color: #333;">Home</a>
+      <a href="about.html" style="margin-right: 20px; text-decoration: none; color: #333;">About Us</a>
+      <a href="contact.html" style="text-decoration: none; color: #333;">Contact</a>
+       <button onclick="toggleCartOverlay()" style="background: none; border: none; cursor: pointer;">
+      <img src="assets/cart-icon.png" alt="Cart" style="width: 24px; height: 24px;">
+     </button>
+    </nav>
+  </header>
+
+  <!-- Title -->
+  <h2 style="text-align: center; margin-top: 20px;">Drinks Menu</h2>
+
+  <!-- Food Grid -->
+  <div class="food-grid" id="menu"></div>
+
+  <!-- Cart -->
+  <div class="cart">
+    <h2>Your Cart</h2>
+    <ul id="cart-list"></ul>
+    <p><strong>Total:</strong> ₹<span id="total">0.00</span></p>
+    <button onclick="submitOrder()">Place Order</button>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Item added to cart!</div>
+
+  <!-- Order Popup -->
+  <div id="order-popup" style="display:none;">
+    <div class="popup-box">
+      <div class="tick">✅</div>
+      <h3>Order Placed!</h3>
+      <p>Thank you for your order. We’re preparing your food!</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="cart.js"></script>
+  <script>
+    const menuData = [
+      {name: 'Lime Soda', price: 110.00, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4jwzue3W5YwSqE4EPWHcQ3isYtLOSRatAxQ&s'},
+      {name: 'Cold Coffee', price: 120.00, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHG84kIH4xR9sC4WAN9UF_iEd4l9Pm4K13yA&s'},
+      {name: 'Brownie Shake', price: 149.00, image: 'https://cdn.grofers.com/assets/search/usecase/banner/brownie_milkshake_01.png'},
+      {name: 'Blue Lagoon', price: 140.00, image: 'https://monin.in/cdn/shop/products/Blue_20Lagoon.png?v=1681306671'},
+      {name: 'Vietnamese Coffee', price: 139.00, image: 'https://thewoksoflife.com/wp-content/uploads/2017/12/vietnamese-coffee-7.jpg'},
+      {name: 'Cold Brew', price: 129.00, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3Vv6GnIl7Xb-vS_EwJCBB49DG-LT9I2mUbw&s'},
+      {name: 'Mojito', price: 149.00, image: 'https://www.artofdrink.com/wp-content/uploads/2010/08/how-to-make-a-mojito-recipe.jpg'}
+    ];
+
+    const menuContainer = document.getElementById('menu');
+    menuData.forEach(item => {
+      const foodItemDiv = document.createElement('div');
+      foodItemDiv.className = 'food-item';
+
+      const img = document.createElement('img');
+      img.src = item.image;
+      img.alt = item.name;
+      foodItemDiv.appendChild(img);
+
+      const foodName = document.createElement('div');
+      foodName.innerText = item.name;
+      foodItemDiv.appendChild(foodName);
+
+      const foodPrice = document.createElement('div');
+      foodPrice.innerText = '₹' + item.price.toFixed(2);
+      foodItemDiv.appendChild(foodPrice);
+
+      const addButton = document.createElement('button');
+      addButton.innerText = 'Add to Cart';
+      addButton.onclick = function () {
+        addToCart(item);
+        showToast(`${item.name} added to cart!`);
+      };
+      foodItemDiv.appendChild(addButton);
+
+      menuContainer.appendChild(foodItemDiv);
+    });
+  </script>
+  
+  <div id="cart-overlay" style="
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+  z-index: 999;
+  padding: 20px;
+  overflow-y: auto;
+  font-family: 'Segoe UI', sans-serif;
+">
+  <h3 style="margin-top: 0;">Your Cart</h3>
+  <ul id="cart-overlay-list" style="list-style: none; padding: 0;"></ul>
+  
+  <p id="empty-cart-msg" style="margin-top: 40px; color: gray; text-align: center; font-weight: 500;">
+    Your cart is empty!!!<br/>Add something tasty!!!
+  </p>
+
+  <p style="margin-top: 20px;"><strong>Total:</strong> ₹<span id="cart-overlay-total">0.00</span></p>
+
+  <button onclick="submitOrder()" style="
+    margin-top: 10px;
+    background-color: #ff6f3c;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+  ">Place Order</button>
+</div>
+<button onclick="toggleCartOverlay()" style="
+  background: none;
+  border: none;
+  font-size: 20px;
+  float: right;
+  cursor: pointer;
+  margin-top: -10px;
+  color: #888;
+">✖</button>
+
+
+
+</body>
+</html>

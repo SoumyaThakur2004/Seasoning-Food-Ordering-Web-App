@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chinese Menu - SEASONINGS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: #fff3e0;">
+    <div style="font-size: 28px; font-weight: bold; color: #ff6f3c;">SEASONINGS</div>
+    <nav>
+      <a href="seasonings.html" style="margin-right: 20px; text-decoration: none; color: #333;">Home</a>
+      <a href="about.html" style="margin-right: 20px; text-decoration: none; color: #333;">About Us</a>
+      <a href="contact.html" style="text-decoration: none; color: #333;">Contact</a>
+      <button onclick="toggleCartOverlay()" style="background: none; border: none; cursor: pointer;">
+      <img src="assets/cart-icon.png
+      " alt="Cart" style="width: 24px; height: 24px;">
+    </button>
+    </nav>
+  </header>
+
+  <!-- Title -->
+  <h2 style="text-align: center; margin-top: 20px;">Chinese Menu</h2>
+
+  <!-- Food Grid -->
+  <div class="food-grid" id="menu"></div>
+
+  <!-- Cart -->
+  <div class="cart">
+    <h2>Your Cart</h2>
+    <ul id="cart-list"></ul>
+    <p><strong>Total:</strong> ₹<span id="total">0.00</span></p>
+    <button onclick="submitOrder()">Place Order</button>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Item added to cart!</div>
+
+  <!-- Order Popup -->
+  <div id="order-popup" style="display:none;">
+    <div class="popup-box">
+      <div class="tick">✅</div>
+      <h3>Order Placed!</h3>
+      <p>Thank you for your order. We’re preparing your food!</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="cart.js"></script>
+  <script>
+    const menuData = [
+      { name: 'Chow Mein', price: 180.00, image: 'https://tastesbetterfromscratch.com/wp-content/uploads/2023/10/Chow-Mein-1.jpg' },
+      { name: 'Manchurian', price: 200.00, image: 'https://www.licious.in/blog/wp-content/uploads/2021/09/shutterstock_1650877375-750x750.jpg' },
+      { name: 'Fried Rice', price: 190.00, image: 'https://www.bigfattummy.com/wp-content/uploads/2017/09/Prawn-Egg-Fried-Rice-07-800x800.jpg' },
+      { name: 'Paneer Chilli', price: 230.00, image: 'https://ajaysdelhiwala.com/cdn/shop/products/ChillyPaneer_3e867b7b-5e23-48a3-93c1-72aea200df91.png?v=1693561472' },
+      { name: 'Dumplings', price: 210.00, image: 'https://maplefromcanada.ca/uploads/2024/07/Recette-dumpling-champignons-erable-2-1200x900-1-600x450.jpg' },
+      { name: 'Corn Chilli', price: 170.00, image: 'https://www.allrecipes.com/thmb/ALLFvCWoaHG0BH6LfIDnllRaQek=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/8681426_Crispy-Corn_Dotdash-Meredith-Food-Studios_2x1-5aa261354db146a1a3b54d80c025cad9.jpg' },
+      { name: 'Veg Crispy', price: 220.00, image: 'https://cdn.dotpe.in/longtail/store-items/1017561/hdIMEcHS.jpeg' },
+      { name: 'Burnt Garlic Noodles', price: 175.00, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK6igdB3UgLvj91bQc8gtSdmwUjrhQVFfivA&s' },
+      { name: 'Hakka Noodles', price: 195.00, image: 'https://chaitrascreations.com/wp-content/uploads/2020/05/DSC_9226_edited-scaled.jpg' },
+      { name: 'Spring Rolls', price: 150.00, image: 'https://d1mxd7n691o8sz.cloudfront.net/static/recipe/recipe/2023-12/Vegetable-Spring-Rolls-2-1-906001560ca545c8bc72baf473f230b4_thumbnail_170.jpeg' },
+      { name: 'Momo', price: 120.00, image: 'https://www.mygingergarlickitchen.com/wp-content/rich-markup-images/1x1/1x1-steamed-veg-momos-spicy-chili-chutney-vegetable-momos-recipe-video.jpg' },
+      { name: 'Wonton', price: 250.00, image: 'https://takestwoeggs.com/wp-content/uploads/2024/10/Wonton-Soup-Lifestyle-Overhead.jpg' },
+    ];
+    renderMenu(menuData);
+
+    const menuContainer = document.getElementById('menu');
+    menuData.forEach(item => {
+      const foodItemDiv = document.createElement('div');
+      foodItemDiv.className = 'food-item';
+
+      const img = document.createElement('img');
+      img.src = item.image;
+      img.alt = item.name;
+      foodItemDiv.appendChild(img);
+
+      const foodName = document.createElement('div');
+      foodName.innerText = item.name;
+      foodItemDiv.appendChild(foodName);
+
+      const foodPrice = document.createElement('div');
+      foodPrice.innerText = '₹' + item.price.toFixed(2);
+      foodItemDiv.appendChild(foodPrice);
+
+      const addButton = document.createElement('button');
+      addButton.innerText = 'Add to Cart';
+      addButton.onclick = function () {
+        addToCart(item);
+        showToast(`${item.name} added to cart!`);
+      };
+      foodItemDiv.appendChild(addButton);
+
+      menuContainer.appendChild(foodItemDiv);
+    });
+  </script>
+
+ <div id="cart-overlay" style="
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+  z-index: 999;
+  padding: 20px;
+  overflow-y: auto;
+  font-family: 'Segoe UI', sans-serif;
+">
+  <h3 style="margin-top: 0;">Your Cart</h3>
+  <ul id="cart-overlay-list" style="list-style: none; padding: 0;"></ul>
+  
+  <p id="empty-cart-msg" style="margin-top: 40px; color: gray; text-align: center; font-weight: 500;">
+    Your cart is empty!!!<br/>Add something tasty!!!
+  </p>
+
+  <p style="margin-top: 20px;"><strong>Total:</strong> ₹<span id="cart-overlay-total">0.00</span></p>
+
+  <button onclick="submitOrder()" style="
+    margin-top: 10px;
+    background-color: #ff6f3c;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+  ">Place Order</button>
+</div>
+<button onclick="toggleCartOverlay()" style="
+  background: none;
+  border: none;
+  font-size: 20px;
+  float: right;
+  cursor: pointer;
+  margin-top: -10px;
+  color: #888;
+">✖</button>
+</body>
+</html>

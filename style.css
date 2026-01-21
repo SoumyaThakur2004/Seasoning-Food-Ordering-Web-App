@@ -1,0 +1,238 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background-color: #fff9f0;
+  color: #333;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.food-item {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 15px;
+  text-align: center;
+}
+
+.food-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.food-item button {
+  margin-top: 10px;
+  background-color: #ff6f3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.food-item button:hover {
+  background-color: #e0552f;
+}
+
+.cart {
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.cart ul {
+  list-style: none;
+  padding: 0;
+}
+
+.cart li {
+  margin-bottom: 10px;
+}
+
+.cart button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cart button:hover {
+  background-color: #c9302c;
+}
+
+.toast {
+  visibility: hidden;
+  min-width: 200px;
+  margin: auto;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  border-radius: 6px;
+  position: fixed;
+  z-index: 1;
+  bottom: 30px;
+  left: 0; right: 0;
+  font-size: 14px;
+}
+
+.toast.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+#order-popup {
+  position: fixed;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.popup-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #fff3e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+header div {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff6f3c;
+}
+
+nav a {
+  margin-right: 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: #ff6f3c;
+}
+
+#menu-title {
+  text-align: center;
+  font-size: 2rem;
+  margin: 30px 0 20px;
+  color: #333;
+}
+
+.food-item {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.food-item:hover {
+  transform: translateY(-5px);
+}
+
+.food-item img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.food-item h3 {
+  font-size: 1.1rem;
+  margin: 10px 0 5px;
+}
+
+.food-item p {
+  font-weight: bold;
+  margin: 0 0 12px;
+}
+
+.food-item button {
+  margin-top: 10px;
+  background-color: #ff6f3c;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.food-item button:hover {
+  background-color: #e0552f;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+  padding: 0 40px 40px;
+}
+#order-popup {
+  position: fixed;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.popup-box {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  animation: popup-fade 0.3s ease-out;
+}
+
+.popup-box .tick {
+  font-size: 50px;
+  margin-bottom: 10px;
+  color: green;
+}
+
+@keyframes popup-fade {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

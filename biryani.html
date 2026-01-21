@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Biryani Menu - SEASONINGS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: #fff3e0;">
+    <div style="font-size: 28px; font-weight: bold; color: #ff6f3c;">SEASONINGS</div>
+    <nav>
+      <a href="seasonings.html" style="margin-right: 20px; text-decoration: none; color: #333;">Home</a>
+      <a href="about.html" style="margin-right: 20px; text-decoration: none; color: #333;">About Us</a>
+      <a href="contact.html" style="text-decoration: none; color: #333;">Contact</a>
+      <button onclick="toggleCartOverlay()" style="background: none; border: none; cursor: pointer;">
+      <img src="assets/cart-icon.png" alt="Cart" style="width: 24px; height: 24px;">
+     </button>
+    </nav>
+  </header>
+
+  <!-- Title -->
+  <h2 style="text-align: center; margin-top: 20px;">Biryani Menu</h2>
+
+  <!-- Food Grid -->
+  <div class="food-grid" id="menu"></div>
+
+  <!-- Cart -->
+  <div class="cart">
+    <h2>Your Cart</h2>
+    <ul id="cart-list"></ul>
+    <p><strong>Total:</strong> ₹<span id="total">0.00</span></p>
+    <button onclick="submitOrder()">Place Order</button>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Item added to cart!</div>
+
+  <!-- Order Popup -->
+  <div id="order-popup" style="display:none;">
+    <div class="popup-box">
+      <div class="tick">✅</div>
+      <h3>Order Placed!</h3>
+      <p>Thank you for your order. We’re preparing your food!</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="cart.js"></script>
+  <script>
+    const menuData = [
+      { name: 'Hyderabadi Biryani', price: 320.00, image: 'https://static.wixstatic.com/media/91e241_475faa4fa56341f3878699dde5ab4904~mv2.jpg/v1/fill/w_864,h_576,al_c,lg_1,q_85/91e241_475faa4fa56341f3878699dde5ab4904~mv2.jpg'},
+      { name: 'Veg Biryani', price: 290.00, image: 'https://static.wixstatic.com/media/91e241_0cf76aa5613b4055be2f922f71edeaa0~mv2.jpg/v1/fill/w_560,h_372,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Ustaadi%20Hyderabadi%20Veg%20Biryani.jpg'},
+      {name: 'Chicken Biryani', price: 350.00,image: 'https://www.licious.in/blog/wp-content/uploads/2022/06/chicken-hyderabadi-biryani-01.jpg'}
+    ];
+
+    const menuContainer = document.getElementById('menu');
+    menuData.forEach(item => {
+      const foodItemDiv = document.createElement('div');
+      foodItemDiv.className = 'food-item';
+
+      const img = document.createElement('img');
+      img.src = item.image;
+      img.alt = item.name;
+      foodItemDiv.appendChild(img);
+
+      const foodName = document.createElement('div');
+      foodName.innerText = item.name;
+      foodItemDiv.appendChild(foodName);
+
+      const foodPrice = document.createElement('div');
+      foodPrice.innerText = '₹' + item.price.toFixed(2);
+      foodItemDiv.appendChild(foodPrice);
+
+      const addButton = document.createElement('button');
+      addButton.innerText = 'Add to Cart';
+      addButton.onclick = function () {
+        addToCart(item);
+        showToast(`${item.name} added to cart!`);
+      };
+      foodItemDiv.appendChild(addButton);
+
+      menuContainer.appendChild(foodItemDiv);
+    });
+  </script>
+  <div id="cart-overlay" style="
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+  z-index: 999;
+  padding: 20px;
+  overflow-y: auto;
+  font-family: 'Segoe UI', sans-serif;
+">
+  <h3 style="margin-top: 0;">Your Cart</h3>
+  <ul id="cart-overlay-list" style="list-style: none; padding: 0;"></ul>
+  
+  <p id="empty-cart-msg" style="margin-top: 40px; color: gray; text-align: center; font-weight: 500;">
+    Your cart is empty!!!<br/>Add something tasty!!!
+  </p>
+
+  <p style="margin-top: 20px;"><strong>Total:</strong> ₹<span id="cart-overlay-total">0.00</span></p>
+
+  <button onclick="submitOrder()" style="
+    margin-top: 10px;
+    background-color: #ff6f3c;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+  ">Place Order</button>
+</div>
+<button onclick="toggleCartOverlay()" style="
+  background: none;
+  border: none;
+  font-size: 20px;
+  float: right;
+  cursor: pointer;
+  margin-top: -10px;
+  color: #888;
+">✖</button>
+
+
+
+</body>
+</html>

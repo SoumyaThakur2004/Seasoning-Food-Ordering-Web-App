@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Italian Menu - SEASONINGS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: #fff3e0;">
+    <div style="font-size: 28px; font-weight: bold; color: #ff6f3c;">SEASONINGS</div>
+    <nav>
+      <a href="seasonings.html" style="margin-right: 20px; text-decoration: none; color: #333;">Home</a>
+      <a href="about.html" style="margin-right: 20px; text-decoration: none; color: #333;">About Us</a>
+      <a href="contact.html" style="text-decoration: none; color: #333;">Contact</a>
+      <button onclick="toggleCartOverlay()" style="background: none; border: none; cursor: pointer;">
+      <img src="assets/cart-icon.png" alt="Cart" style="width: 24px; height: 24px;">
+     </button>
+    </nav>
+  </header>
+
+  <!-- Title -->
+  <h2 style="text-align: center; margin-top: 20px;">Italian Menu</h2>
+
+  <!-- Food Grid -->
+  <div class="food-grid" id="menu"></div>
+
+  <!-- Cart -->
+  <div class="cart">
+    <h2>Your Cart</h2>
+    <ul id="cart-list"></ul>
+    <p><strong>Total:</strong> ₹<span id="total">0.00</span></p>
+    <button onclick="submitOrder()">Place Order</button>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Item added to cart!</div>
+
+  <!-- Order Popup -->
+  <div id="order-popup" style="display:none;">
+    <div class="popup-box">
+      <div class="tick">✅</div>
+      <h3>Order Placed!</h3>
+      <p>Thank you for your order. We’re preparing your food!</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="cart.js"></script>
+  <script>
+    const menuData = [
+      { name: 'White Sauce Pasta', price: 190.00, image: 'https://www.indianveggiedelight.com/wp-content/uploads/2022/12/white-sauce-pasta-featured.jpg' },
+      { name: 'Lasagna', price: 200.00, image: 'https://cdn.loveandlemons.com/wp-content/uploads/2023/12/vegetarian-lasagna-scaled.jpg' },
+      { name: 'Red Sauce Pasta', price: 180.00, image: 'https://www.kimscravings.com/wp-content/uploads/2022/12/creamy-pasta-sauce-recipe-featured.jpg' },
+      { name: 'Pink Sauce Pasta', price: 180.00 , image: 'https://beatthebudget.com/wp-content/uploads/2022/06/Pink-Sauce-Pasta-Tiktok-Pasta-featured-image-1200-x-1500px.jpg' },
+      { name: 'Garlic Bread', price: 189.00 , image: 'https://www.ambitiouskitchen.com/wp-content/uploads/2023/02/Garlic-Bread-4.jpg' },
+      { name: 'Aglio Olio Spaghetti', price: 200.00 , image: 'https://cdn77-s3.lazycatkitchen.com/wp-content/uploads/2018/09/spaghetti-aglio-e-olio-close-up-1000x1500.jpg' },
+      { name: 'Pesto Spaghetti', price: 200.00 , image: 'https://www.kitchensanctuary.com/wp-content/uploads/2023/07/Pesto-Pasta-square-FS.jpg' },
+      { name: 'Ravioli', price:250.00 , image: 'https://thesageapron.com/wp-content/uploads/2023/04/Spinach-Ricotta-Ravioli-45.jpg' },
+    ];
+    renderMenu(menuData);
+
+    const menuContainer = document.getElementById('menu');
+    menuData.forEach(item => {
+      const foodItemDiv = document.createElement('div');
+      foodItemDiv.className = 'food-item';
+
+      const img = document.createElement('img');
+      img.src = item.image;
+      img.alt = item.name;
+      foodItemDiv.appendChild(img);
+
+      const foodName = document.createElement('div');
+      foodName.innerText = item.name;
+      foodItemDiv.appendChild(foodName);
+
+      const foodPrice = document.createElement('div');
+      foodPrice.innerText = '₹' + item.price.toFixed(2);
+      foodItemDiv.appendChild(foodPrice);
+
+      const addButton = document.createElement('button');
+      addButton.innerText = 'Add to Cart';
+      addButton.onclick = function () {
+        addToCart(item);
+        showToast(`${item.name} added to cart!`);
+      };
+      foodItemDiv.appendChild(addButton);
+
+      menuContainer.appendChild(foodItemDiv);
+    });
+    
+
+  </script>
+  <div id="cart-overlay" style="
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+  z-index: 999;
+  padding: 20px;
+  overflow-y: auto;
+  font-family: 'Segoe UI', sans-serif;
+">
+  <h3 style="margin-top: 0;">Your Cart</h3>
+  <ul id="cart-overlay-list" style="list-style: none; padding: 0;"></ul>
+  
+  <p id="empty-cart-msg" style="margin-top: 40px; color: gray; text-align: center; font-weight: 500;">
+    Your cart is empty!!!<br/>Add something tasty!!!
+  </p>
+
+  <p style="margin-top: 20px;"><strong>Total:</strong> ₹<span id="cart-overlay-total">0.00</span></p>
+
+  <button onclick="submitOrder()" style="
+    margin-top: 10px;
+    background-color: #ff6f3c;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+  ">Place Order</button>
+</div>
+<button onclick="toggleCartOverlay()" style="
+  background: none;
+  border: none;
+  font-size: 20px;
+  float: right;
+  cursor: pointer;
+  margin-top: -10px;
+  color: #888;
+">✖</button>
+
+</body>
+</html>

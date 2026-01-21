@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Seasonings</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff9f0;
+      color: #333;
+    }
+
+    .about-header {
+      background-color: #fff6e9;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .about-header h1 {
+      font-size: 1.8rem;
+      color: #ff6f3c;
+      margin: 0;
+    }
+
+    .about-header button {
+      background-color: #ff6f3c;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .team-section {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .team-card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-bottom: 30px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .team-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      border: 3px solid #ff6f3c;
+    }
+
+    .team-card h3 {
+      margin: 10px 0 4px;
+      color: #ff6f3c;
+      font-size: 1.3rem;
+    }
+
+    .team-card h5 {
+      margin: 0 0 10px;
+      color: #777;
+      font-weight: normal;
+    }
+
+    .team-card p {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="about-header">
+    <h1>Meet Our Team</h1>
+    <button onclick="window.location.href='seasonings.html'">← Back to Home</button>
+  </div>
+
+  <div class="team-section">
+
+    <div class="team-card">
+      <img src="assets/aditi.jpeg" alt="Aditi Singh">
+      <h3>Aditi Singh</h3>
+      <h5>Project Head</h5>
+      <p>I am a third-year Computer Science student serving as the Project Head and backend developer for this full stack food delivery website and ensures the smooth user experience through our easy to use website.</p>
+    </div>
+
+    <div class="team-card">
+      <img src="assets/soumya.jpeg" alt="Soumya Thakur">
+      <h3>Soumya Thakur</h3>
+      <h5>Frontend Dev</h5>
+      <p>I am a third-year Computer Science student serving as the frontend developer for this full stack food delivery website and create a user friendly interface.</p>
+    </div>
+
+    <div class="team-card">
+      <img src="assets/sakshi.jpeg" alt="Sakshi Dewangan">
+      <h3>Sakshi Dewangan</h3>
+      <h5>Frontend Dev and Designing</h5>
+      <p>I am a third-year Computer Science student serving as the frontend developer and designer for this full stack food delivery website.</p>
+    </div>
+
+    <div class="team-card">
+      <img src="assets/shipra.jpeg" alt="Shipra Tamrakar">
+      <h3>Shipra Tamrakar</h3>
+      <h5>Frontend Dev</h5>
+      <p> I am a third-year Computer Science student serving as the frontend developer to feature design and frontend enhancements for a better user experience.</p>
+    </div>
+
+  </div>
+<script>
+  const menuData = [/* your items */];
+  renderMenu(menuData);
+</script>
+
+</body>
+</html>
